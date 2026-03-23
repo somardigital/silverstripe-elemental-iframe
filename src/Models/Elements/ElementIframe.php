@@ -67,7 +67,7 @@ class ElementIframe extends BaseElement implements PermissionProvider
 
     private static string $title = 'Iframe';
 
-    private static string $description = 'Display content in an HTML iframe tag';
+    private static string $class_description = 'Display content in an HTML iframe tag';
 
     private static array $responsive_options = [
         '16x9' => '16x9',
@@ -264,7 +264,7 @@ JAVASCRIPT;
     public function saveURLtoLink(string $urlValue = null): ?int
     {
 
-        if (is_null($urlValue) || $urlValue === '') {
+        if (in_array($urlValue, [null, '', '0'], true)) {
             // avoid saving a link model that has no URL
             return null;
         }
