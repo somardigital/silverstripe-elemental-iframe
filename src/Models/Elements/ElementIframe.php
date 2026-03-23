@@ -12,7 +12,6 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Permission;
 use SilverStripe\View\Requirements;
-use SilverStripe\Model\ModelData;
 
 /**
  * Iframe content block
