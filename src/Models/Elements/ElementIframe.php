@@ -12,7 +12,7 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Permission;
 use SilverStripe\View\Requirements;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\ModelData;
 
 /**
  * Iframe content block
@@ -93,7 +93,7 @@ class ElementIframe extends BaseElement implements PermissionProvider
      * Apply requirements when templating
      */
     #[\Override]
-    public function forTemplate($holder = true)
+    public function forTemplate($holder = true): string
     {
 
         // Responsive CSS
@@ -351,8 +351,6 @@ JAVASCRIPT;
             $linkURL = $link->getLinkURL();
             if (is_string($linkURL)) {
                 $url = $linkURL;
-            } elseif ($linkURL instanceof ViewableData) {
-                $url = $linkURL->forTemplate();
             }
         }
 

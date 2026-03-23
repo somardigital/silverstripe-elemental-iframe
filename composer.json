@@ -20,20 +20,26 @@
         }
     ],
     "require": {
-        "dnadesign/silverstripe-elemental": "^5",
-        "codem/silverstripe-html5-inputs": "^1",
-        "gorriecoe/silverstripe-link": "^1.5"
+        "dnadesign/silverstripe-elemental": "^6",
+        "codem/silverstripe-html5-inputs": "^2",
+        "gorriecoe/silverstripe-link": "dev-ss6"
     },
     "require-dev": {
         "cambis/silverstripe-rector": "^2",
         "cambis/silverstan": "^2",
         "friendsofphp/php-cs-fixer": "^3",
         "nswdpc/ci-files": "dev-v-4",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^11.5",
         "phpstan/phpstan": "^2",
         "phpstan/phpstan-phpunit": "^2",
         "rector/rector": "^2"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/nswdpc/silverstripe-link.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "NSWDPC\\Elemental\\Models\\Iframe\\": [
@@ -49,6 +55,12 @@
             "client/static"
         ]
     },
+    "scripts": {
+        "phpstan-analyse": "./vendor/bin/phpstan analyse --ansi --no-progress --no-interaction --configuration vendor/nswdpc/ci-files/phpstan/.phpstan.silverstripe.neon src/ tests/",
+        "rector-dryrun": "./vendor/bin/rector process --dry-run --ansi --config vendor/nswdpc/ci-files/rector/.rector.silverstripe_6_83.php src/ tests/",
+        "rector-process": "./vendor/bin/rector process --no-diffs --ansi --config vendor/nswdpc/ci-files/rector/.rector.silverstripe_6_83.php src/ tests/",
+        "phpcsfixer-fix": "./vendor/bin/php-cs-fixer fix --ansi --no-interaction --config vendor/nswdpc/ci-files/php-cs-fixer/.php-cs-fixer.php src/ tests/"
+    },
     "config": {
         "allow-plugins": {
             "composer/installers": true,
@@ -56,5 +68,7 @@
             "silverstripe/recipe-plugin": true,
             "phpstan/extension-installer": true
         }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
