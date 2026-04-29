@@ -21,7 +21,7 @@
     ],
     "require": {
         "dnadesign/silverstripe-elemental": "^6",
-        "codem/silverstripe-html5-inputs": "^2",
+        "codem/silverstripe-html5-inputs": "dev-ss6",
         "gorriecoe/silverstripe-link": "6.x-dev"
     },
     "repositories": [
