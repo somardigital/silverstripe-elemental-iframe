@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Elemental\Models\Iframe;
 
+use Override;
 use Codem\Utilities\HTML5\UrlField;
 use DNADesign\Elemental\Models\BaseElement;
 use gorriecoe\Link\Models\Link;
@@ -12,7 +13,6 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Permission;
 use SilverStripe\View\Requirements;
-use SilverStripe\View\ViewableData;
 
 /**
  * Iframe content block
@@ -67,7 +67,7 @@ class ElementIframe extends BaseElement implements PermissionProvider
 
     private static string $title = 'Iframe';
 
-    private static string $description = 'Display content in an HTML iframe tag';
+    private static string $class_description = 'Display content in an HTML iframe tag';
 
     private static array $responsive_options = [
         '16x9' => '16x9',
@@ -83,7 +83,7 @@ class ElementIframe extends BaseElement implements PermissionProvider
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function getType()
     {
         return _t(self::class . '.BlockType', 'Iframe');
@@ -92,8 +92,8 @@ class ElementIframe extends BaseElement implements PermissionProvider
     /**
      * Apply requirements when templating
      */
-    #[\Override]
-    public function forTemplate($holder = true)
+    #[Override]
+    public function forTemplate($holder = true): string
     {
 
         // Responsive CSS
@@ -199,7 +199,7 @@ JAVASCRIPT;
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function canEdit($member = null)
     {
         return Permission::checkMember($member, 'ELEMENT_IFRAME_EDIT');
@@ -208,7 +208,7 @@ JAVASCRIPT;
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function canDelete($member = null)
     {
         return Permission::checkMember($member, 'ELEMENT_IFRAME_DELETE');
@@ -217,7 +217,7 @@ JAVASCRIPT;
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function canCreate($member = null, $context = [])
     {
         return Permission::checkMember($member, 'ELEMENT_IFRAME_EDIT');
@@ -234,7 +234,7 @@ JAVASCRIPT;
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
@@ -261,10 +261,10 @@ JAVASCRIPT;
      * @param string $urlValue a URL
      * @return int|null the Link model record ID or null if not a value
      */
-    public function saveURLtoLink(string $urlValue = null): ?int
+    public function saveURLtoLink(?string $urlValue = null): ?int
     {
 
-        if (is_null($urlValue) || $urlValue === '') {
+        if (in_array($urlValue, [null, '', '0'], true)) {
             // avoid saving a link model that has no URL
             return null;
         }
@@ -351,8 +351,6 @@ JAVASCRIPT;
             $linkURL = $link->getLinkURL();
             if (is_string($linkURL)) {
                 $url = $linkURL;
-            } elseif ($linkURL instanceof ViewableData) {
-                $url = $linkURL->forTemplate();
             }
         }
 
@@ -362,7 +360,7 @@ JAVASCRIPT;
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

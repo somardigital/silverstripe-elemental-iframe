@@ -2,6 +2,8 @@
 
 namespace NSWDPC\Elemental\Tests\Iframe;
 
+use Override;
+use DOMDocument;
 use Codem\Utilities\HTML5\UrlField;
 use gorriecoe\Link\Models\Link;
 use gorriecoe\Link\View\Phone as PhoneView;
@@ -10,8 +12,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Assets\Dev\TestAssetStore;
 use SilverStripe\Assets\File;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationException;
+use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\View\Requirements;
 
 /**
@@ -33,7 +34,7 @@ class IframeTest extends SapphireTest
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function setUp(): void
     {
         parent::setUp();
@@ -57,7 +58,7 @@ class IframeTest extends SapphireTest
         );
         foreach ($fileIDs as $fileID) {
             /** @var File $file */
-            $file = DataObject::get_by_id(File::class, $fileID);
+            $file = File::get()->byID($fileID);
             $file->setFromString(str_repeat('x', 1000000), $file->getFilename());
             $file->publishSingle();
         }
@@ -67,7 +68,7 @@ class IframeTest extends SapphireTest
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function tearDown(): void
     {
         parent::tearDown();
@@ -92,9 +93,9 @@ class IframeTest extends SapphireTest
         }
     }
 
-    protected function getDomDocument(string $htmlTemplate): \DOMDocument
+    protected function getDomDocument(string $htmlTemplate): DOMDocument
     {
-        $doc = new \DOMDocument();
+        $doc = new DOMDocument();
         $doc->loadHTML($htmlTemplate);
         return $doc;
     }
